@@ -47,20 +47,6 @@ web/                       # Фронтенд
    go run main.go
    ```
 
-## Доступные URL
-
-После запуска сервера вы можете получить доступ к следующим файлам:
-
-- **Главная страница**: http://localhost:7540/
-- **CSS файлы**: 
-  - http://localhost:7540/css/style.css
-  - http://localhost:7540/css/theme.css
-- **JavaScript файлы**:
-  - http://localhost:7540/js/scripts.min.js
-  - http://localhost:7540/js/axios.min.js
-- **Иконка**: http://localhost:7540/favicon.ico
-- **Страница входа**: http://localhost:7540/login.html
-
 ## Тестирование
 
 1. Убедитесь, что сервер запущен на порту 7540.

@@ -138,5 +138,5 @@ func NextDayHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Возвращаем результат
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(fmt.Sprintf("{\"date\": \"%s\"}", nextDate)))
+	w.Write([]byte(nextDate))
 }
