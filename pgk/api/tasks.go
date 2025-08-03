@@ -14,7 +14,7 @@ type TasksResp struct {
 func tasksHandler(w http.ResponseWriter, r *http.Request) {
 	tasks, err := db.Tasks(50) // максимальное количество записей
 	if err != nil {
-		writeJson(w, map[string]string{"error": "Ошибка получения задач из базы данных"})
+		writeErrorJson(w, "Ошибка получения задач из базы данных", http.StatusInternalServerError)
 		return
 	}
 

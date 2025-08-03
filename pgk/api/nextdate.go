@@ -76,7 +76,7 @@ func calculateNextDailyDate(date, now time.Time, intervalStr string) (string, er
 	// Парсинг интервала
 	interval, err := strconv.Atoi(intervalStr)
 	if err != nil {
-		return "", fmt.Errorf("некорректный интервал дней: %v", err)
+		return "", fmt.Errorf("некорректный интервал дней: %w", err)
 	}
 
 	// Проверка максимального допустимого интервала

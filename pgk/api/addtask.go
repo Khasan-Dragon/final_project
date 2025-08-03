@@ -8,12 +8,6 @@ import (
 	"time"
 )
 
-// writeJson сериализует data в JSON и отправляет ответ
-func writeJson(w http.ResponseWriter, data any) {
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	json.NewEncoder(w).Encode(data)
-}
-
 // checkDate проверяет корректность даты и обрабатывает логику с правилами повторения
 func checkDate(task *db.Task) error {
 	now := time.Now()
@@ -61,26 +55,26 @@ func addTaskHandler(w http.ResponseWriter, r *http.Request) {
 	// Десериализуем JSON в структуру Task
 	var task db.Task
 	if err := json.NewDecoder(r.Body).Decode(&task); err != nil {
-		writeJson(w, map[string]string{"error": "Ошибка десериализации JSON"})
+		writeErrorJson(w, "Ошибка десериализации JSON", http.StatusBadRequest)
 		return
 	}
 
 	// Проверяем обязательное поле title
 	if task.Title == "" {
-		writeJson(w, map[string]string{"error": "Не указан заголовок задачи"})
+		writeErrorJson(w, "Не указан заголовок задачи", http.StatusBadRequest)
 		return
 	}
 
 	// Проверяем и обрабатываем дату
 	if err := checkDate(&task); err != nil {
-		writeJson(w, map[string]string{"error": err.Error()})
+		writeErrorJson(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
 	// Добавляем задачу в базу данных
 	id, err := db.AddTask(&task)
 	if err != nil {
-		writeJson(w, map[string]string{"error": "Ошибка добавления задачи в базу данных"})
+		writeErrorJson(w, "Ошибка добавления задачи в базу данных", http.StatusInternalServerError)
 		return
 	}
 
